@@ -2,6 +2,7 @@
 # imports
 import argparse
 import os
+import csv
 import torch
 from torchvision import datasets, models, transforms
 from torch.autograd import Variable
@@ -28,7 +29,25 @@ print(images_dir)
 
 class_names = ['cat', 'dog']
 
-# calculate results
+### calculating results
+result = {}
+
+# get image clean number
+def get_clean_name(img_dir):
+    img_dir = img_dir.trim()
+    return img_dir.split('.')[0]
+
+def write_to_csv():
+    file = open('cats_vs_dogs_submission.csv', 'w', newline='')
+    with file:
+        fields = ['id', 'label']
+        writer = csv.DictWriter(file, fieldnames=fields)    
+        writer.writeheader()
+        for i in range(1, 12501):
+            writer.writerow({'id' : i, 'label': result[i]})
+    file.close()
+
+# run on model and print results
 def print_prediction_results(model):
     for img_dir in images_dir:
         img = Image.open(os.path.join(data_dir, img_dir))
@@ -44,6 +63,9 @@ def print_prediction_results(model):
 
         for j in range(inputs.size()[0]):
             print(class_names[preds[j]] + ' for image name ' + img_dir)
+            img_no = get_clean_name(img_dir)
+            result[img_no] = preds[j]
+    write_to_csv()
 
 # parse model name to load
 parser = argparse.ArgumentParser()
