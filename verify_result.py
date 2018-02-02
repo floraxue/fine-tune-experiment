@@ -32,7 +32,7 @@ class_names = ['cat', 'dog']
 ### calculating results
 # get image clean number
 def get_clean_name(img_dir):
-    return img_dir.split('.')[0]
+    return int(img_dir.split('.')[0])
 
 def write_to_csv(result):
     file = open('cats_vs_dogs_submission.csv', 'w', newline='')
