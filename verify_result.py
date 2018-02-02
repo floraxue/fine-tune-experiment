@@ -18,15 +18,15 @@ data_transform = transforms.Compose([
                  transforms.ToTensor(),
                  transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
                  ])
-data_dir = '../fine-tune-data/hymenoptera_data_copy/test'
+data_dir = '../fine-tune-data/cats_vs_dogs_test1/'
 # image_dataset = datasets.ImageFolder(data_dir, data_transform)
 # dataloader = torch.utils.data.DataLoader(image_dataset, batch_size=4,
 #                                          shuffle=True, num_workers=4)
 
-images_dir = os.listdir("../fine-tune-data/hymenoptera_data_copy/test")
+images_dir = os.listdir(data_dir)
 print(images_dir)
 
-class_names = ['ants', 'bees']
+class_names = ['cat', 'dog']
 
 # calculate results
 def print_prediction_results(model):

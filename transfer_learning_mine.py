@@ -88,7 +88,8 @@ data_transforms = {
     ]),
 }
 
-data_dir = '../fine-tune-data/hymenoptera_data'
+# data_dir = '../fine-tune-data/hymenoptera_data'
+data_dir = '../fine-tune-data/cats_vs_dogs'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
