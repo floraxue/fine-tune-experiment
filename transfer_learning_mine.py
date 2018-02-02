@@ -289,7 +289,8 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
 ######################################################################
 #
 state_dict_name = 'fine_tuned_best_model_' + str(time.time()) + '.pt'
-model_ft.save_state_dict(state_dict_name)
+torch.save(model_ft, state_dict_name)
+# model_ft.save_state_dict(state_dict_name)
 print(model_ft.state_dict())
 # visualize_model(model_ft)
 
