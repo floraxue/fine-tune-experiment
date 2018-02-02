@@ -61,10 +61,11 @@ def print_prediction_results(model):
         _, preds = torch.max(outputs.data, 1)
 
         for j in range(inputs.size()[0]):
-            print(class_names[preds[j]] + ' for image name ' + img_dir)
+            # print(class_names[preds[j]] + ' for image name ' + img_dir)
             img_no = get_clean_name(img_dir)
             result[img_no] = preds[j]
-    write_to_csv()
+    # write_to_csv()
+    print(result)
 
 # parse model name to load
 parser = argparse.ArgumentParser()
