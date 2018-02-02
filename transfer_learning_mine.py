@@ -88,7 +88,7 @@ data_transforms = {
     ]),
 }
 
-data_dir = 'cats_vs_dogs'
+data_dir = '../fine-tune-data/hymenoptera_data'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
@@ -98,8 +98,8 @@ dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 class_names = image_datasets['train'].classes
 
-# use_gpu = torch.cuda.is_available()
-use_gpu = 0
+use_gpu = torch.cuda.is_available()
+# use_gpu = 0
 
 ######################################################################
 # Visualize a few images
