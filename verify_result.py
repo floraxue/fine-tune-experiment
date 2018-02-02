@@ -33,6 +33,7 @@ def print_prediction_results(model):
     for img_dir in images_dir:
         img = Image.open(os.path.join(data_dir, img_dir))
         inputs = data_transform(img)
+        inputs.unsqueeze_(0)
         if use_gpu:
             inputs = Variable(inputs.cuda())
         else:
