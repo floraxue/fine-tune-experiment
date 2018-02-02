@@ -29,7 +29,7 @@ print(images_dir)
 class_names = ['ants', 'bees']
 
 # calculate results
-def print_prediction_results()
+def print_prediction_results(model):
     for img_dir in images_dir:
         img = Image.open(os.path.join(data_dir, img_dir))
         inputs = data_transform(img)
