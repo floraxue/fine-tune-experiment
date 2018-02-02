@@ -30,13 +30,11 @@ print(images_dir)
 class_names = ['cat', 'dog']
 
 ### calculating results
-result = {}
-
 # get image clean number
 def get_clean_name(img_dir):
     return img_dir.split('.')[0]
 
-def write_to_csv():
+def write_to_csv(result):
     file = open('cats_vs_dogs_submission.csv', 'w', newline='')
     with file:
         fields = ['id', 'label']
@@ -48,6 +46,7 @@ def write_to_csv():
 
 # run on model and print results
 def print_prediction_results(model):
+    result = {}
     for img_dir in images_dir:
         img = Image.open(os.path.join(data_dir, img_dir))
         inputs = data_transform(img)
@@ -64,8 +63,8 @@ def print_prediction_results(model):
             # print(class_names[preds[j]] + ' for image name ' + img_dir)
             img_no = get_clean_name(img_dir)
             result[img_no] = preds[j]
-    # write_to_csv()
-    print(result)
+    write_to_csv(result)
+    # print(result)
 
 # parse model name to load
 parser = argparse.ArgumentParser()
