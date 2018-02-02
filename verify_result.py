@@ -34,7 +34,6 @@ result = {}
 
 # get image clean number
 def get_clean_name(img_dir):
-    img_dir = img_dir.trim()
     return img_dir.split('.')[0]
 
 def write_to_csv():
