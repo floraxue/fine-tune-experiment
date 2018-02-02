@@ -126,7 +126,7 @@ inputs, classes = next(iter(dataloaders['train']))
 # Make a grid from batch
 out = torchvision.utils.make_grid(inputs)
 
-imshow(out, title=[class_names[x] for x in classes])
+# imshow(out, title=[class_names[x] for x in classes])
 
 
 ######################################################################
@@ -290,7 +290,8 @@ model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
 #
 state_dict_name = 'fine_tuned_best_model_' + str(time.time()) + '.pt'
 model_ft.save_state_dict(state_dict_name)
-visualize_model(model_ft)
+print(model_ft.state_dict())
+# visualize_model(model_ft)
 
 
 # ######################################################################
