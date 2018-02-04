@@ -21,6 +21,9 @@ parser.add_argument(
 parser.add_argument(
     '-d', '--data',
     help='data directory')
+parser.add_argument(
+    '--custom',
+    help='test image file name as in mytest folder')
 args = parser.parse_args()
 
 if not args.name:
@@ -30,6 +33,9 @@ if not args.data:
     data_dir = '../fine-tune-data/cats_vs_dogs_test1/'
 else:
     data_dir = os.path.join('../fine-tune-data/', args.data)
+use_custom_fname = False
+if args.custom:
+    use_custom_fname = True
 model_name = os.path.join("../fine-tune-data/", args.name)
 
 # load data
@@ -55,6 +61,16 @@ model = torch.load(model_name)
 # get image clean number
 def get_clean_name(img_dir):
     return int(img_dir.split('.')[0])
+
+def get_clean_name_for_mytest(img_dir):
+    '''
+    Ideally, the test results would be: first 0-999 = 0, 1000-1999 = 1
+    '''
+    tokens = img_dir.split('.')
+    num = tokens[1]
+    if tokens[0] == "dog":
+        num += 1000
+    return num
 
 def write_to_csv(result):
     fname = '../fine-tune-data/cats_vs_dogs_submission_' + str(time.strftime("%Y-%m-%d-%H-%M-%S")) + '.csv'
@@ -84,7 +100,10 @@ def print_prediction_results(model):
 
         for j in range(inputs.size()[0]):
             # print(class_names[preds[j]] + ' for image name ' + img_dir)
-            img_no = get_clean_name(img_dir)
+            if use_custom_fname:
+                img_no = get_clean_name_for_mytest(img_dir)
+            else:
+                img_no = get_clean_name(img_dir)
             result[img_no] = preds[j]
     write_to_csv(result)
     # print(result)
