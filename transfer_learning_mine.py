@@ -47,8 +47,20 @@ import matplotlib.pyplot as plt
 import time
 import os
 import copy
+import argparse
 
 plt.ion()   # interactive mode
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '-d', '--data',
+    help='data directory')
+args = parser.parse_args()
+if not args.data:
+    data_dir = '../fine-tune-data/hymenoptera_data'
+else:
+    data_dir = os.path.join('../fine-tune-data/', args.data)
+
 
 ######################################################################
 # Load Data
@@ -88,8 +100,6 @@ data_transforms = {
     ]),
 }
 
-# data_dir = '../fine-tune-data/hymenoptera_data'
-data_dir = '../fine-tune-data/cats_vs_dogs'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'val']}
