@@ -80,7 +80,7 @@ def write_to_csv(result):
         fields = ['id', 'label']
         writer = csv.DictWriter(file, fieldnames=fields)    
         writer.writeheader()
-        for i in range(1, 12501):
+        for i in range(1, len(images_dir) + 1):
             writer.writerow({'id' : i, 'label': result[i]})
     file.close()
 
