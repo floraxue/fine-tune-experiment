@@ -2,6 +2,7 @@
 # imports
 import argparse
 import os
+import time
 import csv
 import torch
 from torchvision import datasets, models, transforms
@@ -12,6 +13,25 @@ import numpy as np
 
 use_gpu = torch.cuda.is_available()
 
+# parse model name to load
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '-n', '--name',
+    help='model file name')
+parser.add_argument(
+    '-d', '--data',
+    help='data directory')
+args = parser.parse_args()
+
+if not args.name:
+    print("Need model file name.")
+    exit(0)
+if not args.data:
+    data_dir = '../fine-tune-data/cats_vs_dogs_test1/'
+else:
+    data_dir = os.path.join('../fine-tune-data/', args.data)
+model_name = os.path.join("../fine-tune-data/", args.name)
+
 # load data
 data_transform = transforms.Compose([
                  transforms.Resize(256),
@@ -19,7 +39,6 @@ data_transform = transforms.Compose([
                  transforms.ToTensor(),
                  transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
                  ])
-data_dir = '../fine-tune-data/cats_vs_dogs_test1/'
 # image_dataset = datasets.ImageFolder(data_dir, data_transform)
 # dataloader = torch.utils.data.DataLoader(image_dataset, batch_size=4,
 #                                          shuffle=True, num_workers=4)
@@ -29,13 +48,17 @@ print(images_dir)
 
 class_names = ['cat', 'dog']
 
+# load model
+model = torch.load(model_name)
+
 ### calculating results
 # get image clean number
 def get_clean_name(img_dir):
     return int(img_dir.split('.')[0])
 
 def write_to_csv(result):
-    file = open('cats_vs_dogs_submission.csv', 'w', newline='')
+    fname = '../fine-tune-data/cats_vs_dogs_submission_' + str(time.strftime("%Y-%m-%d-%H-%M-%S")) + '.csv'
+    file = open(fname, 'w', newline='')
     with file:
         fields = ['id', 'label']
         writer = csv.DictWriter(file, fieldnames=fields)    
@@ -65,20 +88,6 @@ def print_prediction_results(model):
             result[img_no] = preds[j]
     write_to_csv(result)
     # print(result)
-
-# parse model name to load
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '-n', '--name',
-    help='model file name')
-args = parser.parse_args()
-
-# load model
-if not args.name:
-    print("Need model file name.")
-    exit(0)
-model_name = os.path.join("../fine-tune-data/", args.name)
-model = torch.load(model_name)
 
 # show results
 print_prediction_results(model)

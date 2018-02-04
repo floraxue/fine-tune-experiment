@@ -261,7 +261,7 @@ def visualize_model(model, num_images=6):
 # Load a pretrained model and reset final fully connected layer.
 #
 
-model_ft = models.resnet18(pretrained=True)
+model_ft = models.resnet50(pretrained=True)
 num_ftrs = model_ft.fc.in_features
 model_ft.fc = nn.Linear(num_ftrs, 2)
 
@@ -285,12 +285,14 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 #
 
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
-                       num_epochs=25)
+                       num_epochs=50)
 
 ######################################################################
 #
 state_dict_name = os.path.join('../fine-tune-data',
-                               'fine_tuned_best_model_' + str(time.time()) + '.pt')
+                               'fine_tuned_best_model_' 
+                               + str(time.strftime("%Y-%m-%d-%H-%M-%S")) 
+                               + '.pt')
 torch.save(model_ft, state_dict_name)
 # model_ft.save_state_dict(state_dict_name)
 # print(model_ft.state_dict())
