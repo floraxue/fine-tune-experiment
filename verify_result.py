@@ -104,6 +104,7 @@ def print_prediction_results(model):
                 img_no = get_clean_name_for_mytest(img_dir)
             else:
                 img_no = get_clean_name(img_dir)
+            print(img_no)
             result[img_no] = preds[j]
     write_to_csv(result)
     # print(result)
