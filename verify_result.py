@@ -67,7 +67,7 @@ def get_clean_name_for_mytest(img_dir):
     Ideally, the test results would be: first 0-999 = 0, 1000-1999 = 1
     '''
     tokens = img_dir.split('.')
-    num = tokens[1]
+    num = int(tokens[1])
     if tokens[0] == "dog":
         num += 1000
     return num
