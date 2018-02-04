@@ -68,6 +68,7 @@ def get_clean_name_for_mytest(img_dir):
     '''
     tokens = img_dir.split('.')
     num = int(tokens[1])
+    num -= 9000
     if tokens[0] == "dog":
         num += 1000
     return num
