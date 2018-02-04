@@ -68,9 +68,10 @@ def get_clean_name_for_mytest(img_dir):
     '''
     tokens = img_dir.split('.')
     num = int(tokens[1])
-    num -= 9000
+    num -= 9000  # eliminate the 9xxx
+    num += 1     # start index at 1
     if tokens[0] == "dog":
-        num += 1000
+        num += 1000  # "dog" starts from 1001
     return num
 
 def write_to_csv(result):
